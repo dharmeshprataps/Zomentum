@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var ticketRouter = require('./routes/bookTickets')
 var updateTicketRouter = require('./routes/updateTicket')
 var showTicketsRouter= require('./routes/showTickets');
+var showTicketRouter= require('./routes/showTicket');
 const config = require('./config')
 const mongoose= require('mongoose');
 var app = express();
@@ -34,6 +35,7 @@ app.use('/', indexRouter);
 app.use('/tickets',ticketRouter);
 app.use('/updateTickets',updateTicketRouter)
 app.use('/showTickets',showTicketsRouter)
+app.use('/showTicket',showTicketRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
