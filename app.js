@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-cron.schedule('0 0 */8 * * *',()=>updatedDb())
+cron.schedule('0 0 */1 * * *',()=>updatedDb())
 app.use('/', indexRouter);
 app.use('/tickets',ticketRouter);
 app.use('/updateTickets',updateTicketRouter)

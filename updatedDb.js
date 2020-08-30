@@ -12,6 +12,7 @@ module.exports = async()=>{
             // Finding and deleting the ticket which is more than 8 hours old.
             if( slotTimeStamp+8*60*60*1000<time ){
                 await Ticket.findOneAndDelete({_id:element._id}).exec();
+                await Show.findOneAndUpdate({_id:show._id},{ totalTickets: show.totalTickets-1 })
             }
         }); 
     }
