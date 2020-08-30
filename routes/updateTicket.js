@@ -85,7 +85,7 @@ updateTicketRouter.route('/')
                     newTicket.token=hash;
                     // new ticket generated
                     await ticket.create(newTicket,()=>{
-                        res.send(`Your ticket has been updated with token => ${newTicket.token} at time ${moment(date).format("DD-MM-YYYY h:mm:ss")} please keep both of them safe.`);
+                        res.json({message:`Your ticket has been updated with token => ${newTicket.token} at time ${moment(date).format("DD-MM-YYYY h:mm:ss")} please keep both of them safe.`});
                     })
                     
                 })
