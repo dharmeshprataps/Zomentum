@@ -18,7 +18,7 @@ updateTicketRouter.route('/')
         try{
 
             // finding old ticket with token
-            const oldTicket = await ticket.findOne({token}).exec();
+            const oldTicket = await ticket.findOne({token});
             if(!oldTicket){
                 const err =new Error("Ticket not Found")
                 return next(err)
@@ -29,17 +29,18 @@ updateTicketRouter.route('/')
             
 
             // checking if the details provided are similar to the details in database.
-            if(String(oldTicket.phoneNumber)!=String(previousPhoneNumber) || updatedAt != previousBookingTime){
+            if(String(oldTicket.phoneNumber)!=String(previousPhoneNumber) || Math.abs(updatedAt - previousBookingTime)>1000*60){
                 const Err = new Error("Cant Find a ticket with these crendentials")
                 return next(Err);
             }
             //decreasing the count of old timeslot number to tickets booked
-            await Shows.updateOne({timming : oldTicket.slotTime.timming},{totalTickets:oldTicket.slotTime.totalTickets-1 }).exec()
+            const show = await Shows.findOne({_id : oldTicket.slotTime})
+            await Shows.updateOne({timming : show.timming},{totalTickets:show.totalTickets-1 }).exec()
             var username = oldTicket.username
             var slotTime= req.body.newSlotTime
             
             // removing the old ticket
-            ticket.remove({token});
+            await ticket.remove({token});
             const date = new Date().getTime();
 
             //creating a new token with the new details provided
@@ -53,7 +54,7 @@ updateTicketRouter.route('/')
                     timming : slotTime,
                     totalTickets : 1
                 }
-                await Shows.create(showSlot).exec();
+                await Shows.create(showSlot);
             }
             else{
                 

@@ -57,10 +57,13 @@ ticketRouter.route('/')
                     }
                     newTicket.token=hash;
                     // creating a new ticket and sending its details to the user.
-                    await ticket.create(newTicket,()=>{
-                        res.send({message : `Your ticket has been generated with token => ${newTicket.token} at time ${moment(date).format("DD-MM-YYYY HH:mm:ss")} please keep both of them safe.`});
-                    })
-                    
+                    try{
+                        await ticket.create(newTicket);
+                        res.json({message : `Your ticket has been generated with token => ${newTicket.token} at time ${moment(date).format("DD-MM-YYYY HH:mm:ss")} please keep both of them safe.`});
+                    }
+                    catch(err){
+                        next(err);
+                    }
                 })
             })
             
