@@ -13,6 +13,8 @@ var showTicketRouter= require('./routes/showTicket');
 var deleteTicketRouter =  require('./routes/deleteTicket')
 const config = require('./config')
 const mongoose= require('mongoose');
+const cron= require('node-cron')
+const updatedDb= require('./updatedDb')
 var app = express();
 app.use(bodyparser.json())  
 const url = config.MongoUrl
@@ -31,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+cron.schedule('0 0 */8 * * *',()=>updatedDb())
 app.use('/', indexRouter);
 app.use('/tickets',ticketRouter);
 app.use('/updateTickets',updateTicketRouter)
