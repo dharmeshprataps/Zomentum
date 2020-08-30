@@ -11,7 +11,7 @@ showTicketRouter.route('/')
                 const Err= new Error("Ticket not found");
                 return next(Err);
             }
-            res.json(ticket)
+            res.json({ticket: ticket})
         }
         catch(err){
              next(err)

@@ -26,7 +26,7 @@ showTicketsRouter.route('/')
                     ticketMap[ticket._id] = ticket;
             });
             // sending the hash map.
-            res.send(ticketMap)
+            res.send({allTicket : ticketMap})
         }
         catch(err){
              next(err)
