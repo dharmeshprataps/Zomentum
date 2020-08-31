@@ -25,6 +25,10 @@ Whenever a ticket is booked then that number of tickets is increased by 1 if tha
 
 Testing is done using mocha and chai.
 
+Node-Cron is used for clearing out the MongoDB data after every 1 hour.
+
+ScreenShots are also uploaded in the screenshots folder.
+
 To run server => npm start
 
 To run testing => npm run test
